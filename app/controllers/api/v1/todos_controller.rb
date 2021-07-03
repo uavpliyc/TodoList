@@ -28,7 +28,7 @@ class Api::V1::TodosController < ApplicationController
   end
 
    def destroy
-    if Todo.destroy(params[;id])
+    if Todo.destroy(params[:id])
       head :no_content
     else
       render json: { error: "削除失敗しました"}, status: 422
