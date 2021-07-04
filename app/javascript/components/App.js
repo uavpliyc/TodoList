@@ -1,6 +1,6 @@
 import React from 'react'
 import { Switch, Route, Link } from 'react-router-dom'
-import Styled from 'styled-components'
+import styled from 'styled-components'
 import AddTodo from './AddTodo'
 import TodoList from './TodoList'
 import EditTodo from './EditTodo'
@@ -46,9 +46,32 @@ const Wrapper = styled.div`
 
 function App() {
   return (
-    <div>
-      App
-    </div>
+    <>
+      <Navbar>
+        <Logo>
+          TODO
+        </Logo>
+        <NavItems>
+          <NavItem>
+            <Link to="/todos">
+              Todoリスト
+            </Link>
+          </NavItem>
+          <NavItem>
+            <Link to="/todos/new">
+              Todo追加
+            </Link>
+          </NavItem>
+        </NavItems>
+      </Navbar>
+      <Wrapper>
+        <Switch>
+          <Route exact path="/todos" component={TodoList} />
+          <Route exact path="/todos/new" component={AddTodo} />
+          <Route path="/todos/:id/edit" component={EditTodo} />
+        </Switch>
+      </Wrapper>
+    </>
   )
 }
 
