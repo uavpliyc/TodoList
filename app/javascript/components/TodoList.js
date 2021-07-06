@@ -1,4 +1,4 @@
-import React { useState, useEffect} from 'react'
+import React, { useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios' //HTTP通信
 import styled from 'styled-components'
@@ -70,6 +70,20 @@ const EditButton = styled.span`
 `
 
 function TodoList() {
+  const [todos, setTodos] = useState([])
+  const [searchName, setSearchName] = useState('')
+
+  useEffect(() => {
+    axios.get('/api/v1/todos.json')
+    .then(resp => {
+      console.log(resp.data)
+      setTodos(resp.data);
+    })
+    .catch (e => {
+      console.log(e);
+    })
+  }, [])
+
   return (
     <div>
       TodoList
