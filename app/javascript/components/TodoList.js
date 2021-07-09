@@ -112,9 +112,21 @@ function TodoList() {
   }
 
   return (
-    <div>
-      TodoList
-    </div>
+    <>
+      <h1>Todoリスト</h1>
+      <SearchAndButton>
+        <SearchForm
+          type="text"
+          placeholder="Todoを検索する"
+          onChange={event => {
+            setSearchName(event.target.value)
+          }}
+        />
+        <RemoveAllButton onClick={RemoveAllTodos}>
+          すべて削除
+        </RemoveAllButton>
+      </SearchAndButton>
+    </>
   )
 }
 
