@@ -14,7 +14,7 @@ class Api::V1::TodosController < ApplicationController
     if todo.save
       render json: todo
     else
-      render json.errors, status: 422
+      render json: todo.errors, status: 422
     end
   end
 
@@ -23,7 +23,7 @@ class Api::V1::TodosController < ApplicationController
     if todo.update(todo_params)
       render json: todo
     else
-      render json.errors, status: 422
+      render json: todo.errors, status: 422
     end
   end
 

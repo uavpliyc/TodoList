@@ -135,11 +135,25 @@ function TodoList() {
             return val
           }
         }).map((val, key) => {
-          return(
+          return (
             <Row key={key}>
+              {val.is_completed ? (
+                <CheckedBox>
+                  <ImCheckboxChecked onClick={() => updateIsCompleted(key, val) } />
+                </CheckedBox>
+              ) : (
+                <UncheckedBox>
+                  <ImCheckboxUnchecked onClick={() => updateIsCompleted(key, val) } />
+                </UncheckedBox>
+              )}
               <TodoName is_completed={val.is_completed}>
                 {val.name}
               </TodoName>
+              <Link to={"/todos/" + val.id + "/edit"}>
+                <EditButton>
+                  <AiFillEdit />
+                </EditButton>
+              </Link>
             </Row>
           )
         })}
