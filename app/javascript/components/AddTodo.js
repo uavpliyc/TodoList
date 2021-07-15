@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 import { toast } from 'react-toastify'
@@ -83,9 +83,26 @@ function AddTodo(props) {
     })
   }
   return (
-    <div>
-      AddTodo
-    </div>
+    <>
+      <h1>新規Todo</h1>
+      <InputAndButton>
+        <InputName
+          type="text"
+          required
+          value={todo.name}
+          name="name"
+          onChange={handleInputChange}
+          />
+          <Button
+            onClick={saveTodo}
+            disabled={(!todo.name || /^\s*$/.test(todo.name))}
+            >
+            <Icon>
+              <FiSend />
+            </Icon>
+          </Button>
+      </InputAndButton>
+    </>
   )
 }
 
