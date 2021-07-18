@@ -51,7 +51,74 @@ const DeleteButton = styled.button`
   cursor: pointer;
 `
 
-function EditTodo() {
+toast.configure()
+
+function EditTodo(props) {
+  const initialTodoState = {
+    id: null,
+    name: "",
+    is_completed: false
+  }
+
+  const [currentTodo, setCurrentTodo] = useState(initialTodoState)
+
+  const notify = () => {
+    toast.success('Todoが更新できました', {
+      position: 'bottom-center',
+      hideProgressBar: true
+    })
+  }
+
+  const getTodo = id => {
+    axios.get('/api/v1/todos/${id')
+    .then(resp => {
+      setCurrentTodo(resp.data)
+    })
+    .catch(e => {
+      console.log(e)
+    })
+  }
+
+  useEffect(() => {
+    getTodo(props.match.params.id)
+  }, [props.match.params.id])
+
+  const handleInputChange = event => {
+    const { name, value } = event.target;
+    setCurrentTodo({ ...currentTodo, [name]: value })
+  }
+  const updateIsCompleted = val => {
+    var data = {
+      id: val.id,
+      name : val.name,
+      is_completed: !val.is_completed
+    }
+    axios.patch(`/api/v1/todos/${val.id}`, data)
+    .then(resp => {
+      setCurrentTodo(resp.data)
+    })
+  }
+
+  const updateTodo = () => {
+    axios.patch(`/api/v1/todo/${currentTodo.id}`, currentTodo)
+    .then(resp => {
+      notify()
+      props.history.push('/todos')
+    })
+  }
+
+  const deleteTodo = () => {
+    const sure = window.confirm('削除しますか？')
+    if (sure) {
+      axios.delete('/api/v1/todos/${currentTodo.id}')
+      .then(resp => {
+        props.history.push('/todos')
+      })
+      .catch(e => {
+        console.log(e)
+      })
+    }
+  }
   return (
     <div>
       EditTodo
