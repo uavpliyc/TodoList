@@ -70,7 +70,7 @@ function EditTodo(props) {
   }
 
   const getTodo = id => {
-    axios.get('/api/v1/todos/${id')
+    axios.get(`/api/v1/todos/${id}`)
     .then(resp => {
       setCurrentTodo(resp.data)
     })
@@ -87,6 +87,7 @@ function EditTodo(props) {
     const { name, value } = event.target;
     setCurrentTodo({ ...currentTodo, [name]: value })
   }
+
   const updateIsCompleted = val => {
     var data = {
       id: val.id,
@@ -105,12 +106,15 @@ function EditTodo(props) {
       notify()
       props.history.push('/todos')
     })
+    .catch(e => {
+      console.log(e)
+    })
   }
 
   const deleteTodo = () => {
     const sure = window.confirm('削除しますか？')
     if (sure) {
-      axios.delete('/api/v1/todos/${currentTodo.id}')
+      axios.delete(`/api/v1/todos/${currentTodo.id}`)
       .then(resp => {
         props.history.push('/todos')
       })
@@ -124,7 +128,7 @@ function EditTodo(props) {
       <h1>Todoを編集する</h1>
       <div>
         <div>
-          <label htmlFor="name">現在の名前</label>
+          <label htmlFor="name">現在のTodo名</label>
           <InputName
             type="text"
             name="name"
@@ -134,24 +138,24 @@ function EditTodo(props) {
           <div>
             <span>現在のステータス</span>
             <CurrentStatus>
-              {currentTodo.is_completed ? "Completed" : "Uncompleted" }
+              {currentTodo.is_completed ? "完了" : "未完了" }
             </CurrentStatus>
           </div>
         </div>
         {currentTodo.is_completed ? (
           <IsCompletedButton onClick={() => updateIsCompleted(currentTodo)}>
-            Uncompleted
+            未完了
           </IsCompletedButton>
         ) : (
           <IsCompletedButton onClick={() => updateIsCompleted(currentTodo)}>
-            Completed
+            完了
           </IsCompletedButton>
         )}
         <EditButton onClick={updateTodo}>
-          Update
+          更新する
         </EditButton>
         <DeleteButton onClick={deleteTodo}>
-          Delete
+          削除する
         </DeleteButton>
       </div>
     </>
