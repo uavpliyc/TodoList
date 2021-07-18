@@ -120,9 +120,41 @@ function EditTodo(props) {
     }
   }
   return (
-    <div>
-      EditTodo
-    </div>
+    <>
+      <h1>Todoを編集する</h1>
+      <div>
+        <div>
+          <label htmlFor="name">現在の名前</label>
+          <InputName
+            type="text"
+            name="name"
+            value={currentTodo.name}
+            onChange={handleInputChange}
+          />
+          <div>
+            <span>現在のステータス</span>
+            <CurrentStatus>
+              {currentTodo.is_completed ? "Completed" : "Uncompleted" }
+            </CurrentStatus>
+          </div>
+        </div>
+        {currentTodo.is_completed ? (
+          <IsCompletedButton onClick={() => updateIsCompleted(currentTodo)}>
+            Uncompleted
+          </IsCompletedButton>
+        ) : (
+          <IsCompletedButton onClick={() => updateIsCompleted(currentTodo)}>
+            Completed
+          </IsCompletedButton>
+        )}
+        <EditButton onClick={updateTodo}>
+          Update
+        </EditButton>
+        <DeleteButton onClick={deleteTodo}>
+          Delete
+        </DeleteButton>
+      </div>
+    </>
   )
 }
 
