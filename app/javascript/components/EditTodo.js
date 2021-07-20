@@ -126,10 +126,10 @@ function EditTodo(props) {
   }
   return (
     <>
-      <h1>Editing Todo</h1>
+      <h1>Todoを編集する</h1>
       <div>
         <div>
-          <label htmlFor="name">Current Name</label>
+          <label htmlFor="name">Todo名</label>
           <InputName
             type="text"
             name="name"
@@ -137,26 +137,26 @@ function EditTodo(props) {
             onChange={handleInputChange}
           />
           <div>
-            <span>Current Status</span><br/>
+            <span>現在のステータス</span><br/>
             <CurrentStatus>
-              {currentTodo.is_completed ? "Completed" : "Uncompleted" }
+              {currentTodo.is_completed ? "完了" : "未完了" }
             </CurrentStatus>
           </div>
         </div>
         {currentTodo.is_completed ? (
           <IsCompletedButton onClick={() => updateIsCompleted(currentTodo)}>
-            Uncompleted
+            未完了にする
           </IsCompletedButton>
         ) : (
           <IsCompletedButton onClick={() => updateIsCompleted(currentTodo)}>
-            Completed
+            完了にする
           </IsCompletedButton>
         )}
         <EditButton onClick={updateTodo}>
-          Update
+          更新する
         </EditButton>
         <DeleteButton onClick={deleteTodo}>
-          Delete
+          削除する
         </DeleteButton>
       </div>
     </>
