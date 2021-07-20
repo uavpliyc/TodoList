@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react"
 import axios from 'axios'
 import styled from 'styled-components'
 import { toast } from 'react-toastify'
@@ -18,6 +18,17 @@ const CurrentStatus = styled.div`
   font-weight: bold;
 `
 
+const IsCompletedButton = styled.button`
+  color: #fff;
+  font-weight: 500;
+  font-size: 17px;
+  padding: 5px 10px;
+  background: #f2a115;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+`
+
 const EditButton = styled.button`
   color: #fff;
   font-weight: 500;
@@ -30,16 +41,6 @@ const EditButton = styled.button`
   cursor: pointer;
 `
 
-const IsCompletedButton = styled.button`
-  color: #fff;
-  font-weight: 500;
-  font-size: 17px;
-  padding: 5px 10px;
-  background: #f2a115;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-`
 const DeleteButton = styled.button`
   color: #fff;
   font-weight: 500;
@@ -63,7 +64,7 @@ function EditTodo(props) {
   const [currentTodo, setCurrentTodo] = useState(initialTodoState)
 
   const notify = () => {
-    toast.success('Todoが更新できました', {
+    toast.success('Todo successfully updated!', {
       position: 'bottom-center',
       hideProgressBar: true
     })
@@ -101,7 +102,7 @@ function EditTodo(props) {
   }
 
   const updateTodo = () => {
-    axios.patch(`/api/v1/todo/${currentTodo.id}`, currentTodo)
+    axios.patch(`/api/v1/todos/${currentTodo.id}`, currentTodo)
     .then(resp => {
       notify()
       props.history.push('/todos')
@@ -112,7 +113,7 @@ function EditTodo(props) {
   }
 
   const deleteTodo = () => {
-    const sure = window.confirm('削除しますか？')
+    const sure = window.confirm('Are you sure?')
     if (sure) {
       axios.delete(`/api/v1/todos/${currentTodo.id}`)
       .then(resp => {
@@ -125,10 +126,10 @@ function EditTodo(props) {
   }
   return (
     <>
-      <h1>Todoを編集する</h1>
+      <h1>Editing Todo</h1>
       <div>
         <div>
-          <label htmlFor="name">現在のTodo名</label>
+          <label htmlFor="name">Current Name</label>
           <InputName
             type="text"
             name="name"
@@ -136,26 +137,26 @@ function EditTodo(props) {
             onChange={handleInputChange}
           />
           <div>
-            <span>現在のステータス</span>
+            <span>Current Status</span><br/>
             <CurrentStatus>
-              {currentTodo.is_completed ? "完了" : "未完了" }
+              {currentTodo.is_completed ? "Completed" : "Uncompleted" }
             </CurrentStatus>
           </div>
         </div>
         {currentTodo.is_completed ? (
           <IsCompletedButton onClick={() => updateIsCompleted(currentTodo)}>
-            未完了
+            Uncompleted
           </IsCompletedButton>
         ) : (
           <IsCompletedButton onClick={() => updateIsCompleted(currentTodo)}>
-            完了
+            Completed
           </IsCompletedButton>
         )}
         <EditButton onClick={updateTodo}>
-          更新する
+          Update
         </EditButton>
         <DeleteButton onClick={deleteTodo}>
-          削除する
+          Delete
         </DeleteButton>
       </div>
     </>
